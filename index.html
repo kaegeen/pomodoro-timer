@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pomodoro Timer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded shadow w-full max-w-sm text-center">
+    <h1 class="text-2xl font-bold mb-4">Pomodoro Timer</h1>
+    <div id="timer" class="text-4xl font-mono mb-6">25:00</div>
+    <button onclick="startTimer()" class="border px-4 py-2 w-full">Start</button>
+  </div>
+
+  <script>
+    let duration = 25 * 60
+    let timerId
+
+    function updateDisplay(seconds) {
+      const minutes = Math.floor(seconds / 60)
+      const secs = seconds % 60
+      document.getElementById('timer').textContent =
+        `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
+    }
+
+    function startTimer() {
+      clearInterval(timerId)
+      let remaining = duration
+      updateDisplay(remaining)
+
+      timerId = setInterval(() => {
+        remaining--
+        updateDisplay(remaining)
+
+        if (remaining <= 0) {
+          clearInterval(timerId)
+          alert('Pomodoro complete!')
+        }
+      }, 1000)
+    }
+  </script>
+</body>
+</html>
